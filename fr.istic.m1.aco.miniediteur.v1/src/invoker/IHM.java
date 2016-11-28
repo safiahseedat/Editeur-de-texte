@@ -2,6 +2,7 @@ package invoker;/**
  * Created by Safiah on 25/11/2016.
  */
 
+
 import client.Configurateur;
 import command.Coller;
 import command.Command;
@@ -17,12 +18,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import memento.Caretaker;
 import reciever.MoteurEditionImpl;
 import reciever.Selection;
 
 public class IHM extends Application {
 
     public static StringBuffer textins;
+
+
 
     @Override
     public void start(Stage stage) {
@@ -39,11 +43,21 @@ public class IHM extends Application {
         couper.setPrefSize(100, 20);
         Button coller = new Button("Coller");
         coller.setPrefSize(100, 20);
+        Button start = new Button("Enregistrer");
+        coller.setPrefSize(100, 20);
+        Button stop = new Button("Arreter");
+        coller.setPrefSize(100, 20);
+        Button rejouer = new Button("Rejouer");
+        coller.setPrefSize(100, 20);
 
 
-        hbox.getChildren().addAll(copier, couper, coller);
+        hbox.getChildren().addAll(copier, couper, coller, start, stop, rejouer);
 
         TextArea textArea = new TextArea();
+
+
+
+
 
         copier.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -51,6 +65,7 @@ public class IHM extends Application {
                 Configurateur.getMoteur().selectionner(textArea.getSelection().getStart(), textArea.getSelection().getEnd());
                 Configurateur.commandes.get("copier").execute();
                 textArea.setText(Configurateur.getMoteur().buffer.getTexte().toString());
+
             }
         });
         coller.setOnAction(new EventHandler<ActionEvent>() {
@@ -59,6 +74,7 @@ public class IHM extends Application {
                 Configurateur.getMoteur().selectionner(textArea.getSelection().getStart(), textArea.getSelection().getEnd());
                 Configurateur.commandes.get("coller").execute();
                 textArea.setText(Configurateur.getMoteur().buffer.getTexte().toString());
+                Configurateur.getMoteur().buffer.lire();
 
             }
         });
@@ -69,6 +85,35 @@ public class IHM extends Application {
                 Configurateur.getMoteur().selectionner(textArea.getSelection().getStart(), textArea.getSelection().getEnd());
                 Configurateur.commandes.get("couper").execute();
                 textArea.setText(Configurateur.getMoteur().buffer.getTexte().toString());
+                Configurateur.getMoteur().buffer.lire();
+            }
+        });
+
+        start.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Caretaker.getINSTANCE().demarrer();
+
+            }
+        });
+
+        stop.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Caretaker.getINSTANCE().arreter();
+
+            }
+        });
+
+        rejouer.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Configurateur.getMoteur().selectionner(textArea.getSelection().getStart(), textArea.getSelection().getEnd());
+                Caretaker.getINSTANCE().rejouer();
+                Configurateur.getMoteur().buffer.lire();
+                Configurateur.getMoteur().buffer.setText(new StringBuffer(""));
+
+
             }
         });
 
@@ -100,6 +145,8 @@ public class IHM extends Application {
                     Configurateur.commandes.get("instxt").execute();
                     Configurateur.getMoteur().buffer.lire();
 
+
+
                 }
 
             }
@@ -109,7 +156,7 @@ public class IHM extends Application {
         });
 
 
-        //bp.getChildren().add(textArea);
+
         bp.setCenter(textArea);
 
 

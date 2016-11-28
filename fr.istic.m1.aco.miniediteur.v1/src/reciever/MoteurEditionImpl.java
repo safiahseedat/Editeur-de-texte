@@ -6,6 +6,7 @@ public class MoteurEditionImpl implements MoteurEdition {
 	public Buffer buffer = Buffer.getINSTANCE();
 	public PressePapier pressePapier = PressePapier.getINSTANCE();
 	public Selection selection = Selection.getInstance();
+	public static boolean enregistrement = false;
 
 
 	public MoteurEditionImpl(){

@@ -32,9 +32,9 @@ public class Selection {
 		this.finSelection = fin;
 	}
 
-	public void setSelection(int deb, int fin){
-		setSelectionDebut(deb);
-		setSelectionFin(fin);
+	public void avancerCurseur(){
+		setSelectionDebut(getSelectionDebut()+1);
+		setSelectionFin(getSelectionFin()+1);
 	}
 
 }
