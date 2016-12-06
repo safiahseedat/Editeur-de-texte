@@ -111,7 +111,10 @@ public class IHM extends Application {
                 Configurateur.getMoteur().selectionner(textArea.getSelection().getStart(), textArea.getSelection().getEnd());
                 Caretaker.getINSTANCE().rejouer();
                 Configurateur.getMoteur().buffer.lire();
+                textArea.setText(Configurateur.getMoteur().buffer.getTexte().toString());
                 Configurateur.getMoteur().buffer.setText(new StringBuffer(""));
+                Configurateur.getMoteur().selectionner(0,0);
+
 
 
             }
@@ -127,7 +130,7 @@ public class IHM extends Application {
             public void handle(KeyEvent event) {
                 Configurateur.getMoteur().selectionner(textArea.getSelection().getStart(), textArea.getSelection().getEnd());
                 if(event.getCode().equals(KeyCode.ENTER)){
-                    textins = new StringBuffer("/n");
+                    textins = new StringBuffer("\n");
                     Configurateur.commandes.get("instxt").execute();
                 }else if(event.getCode().equals(KeyCode.BACK_SPACE)){
                     if(textArea.getSelection().getEnd() != 0){
@@ -144,6 +147,7 @@ public class IHM extends Application {
                     textins = new StringBuffer(event.getText());
                     Configurateur.commandes.get("instxt").execute();
                     Configurateur.getMoteur().buffer.lire();
+
 
 
 
