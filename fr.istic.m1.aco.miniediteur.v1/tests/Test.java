@@ -8,7 +8,7 @@ import
  */
 public class Test {
 
-    @test
+    @Test
 
     public static MoteurEditionImpl m = new MoteurEditionImpl();
     Command coller = new Coller(m);
